@@ -1,0 +1,9 @@
+@AngularCalculator.Server_HostAddress = http://localhost:5119
+
+GET {{AngularCalculator.Server_HostAddress}}/api/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{AngularCalculator.Server_HostAddress}}/api/Number?number=9999/
+Accept: application/json

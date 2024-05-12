@@ -1,0 +1,69 @@
+/* You can add global styles to this file, and also import other style files */
+h1 {
+  position: absolute;
+
+  top: -1rem;
+  left: 0;
+  right: 0;
+}
+
+h3 {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  top: 2rem;
+}
+
+footer {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 1rem;
+}
+
+button {
+    width: 3rem;
+    height: 3rem;
+
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+input {
+    width: 15rem;
+    height: 2rem;
+}
+
+span {
+    align-content: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-rows: 4rem 4rem 4rem 4rem;
+  grid-template-columns: 4rem 4rem 4rem;
+
+  justify-items: center;
+  justify-content: center;
+
+  margin: 5rem;
+}
+
+.root-container {
+    display: flex;
+    flex-flow:column;
+
+    position: relative;
+
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+.equation-container {
+    display: flex;
+
+    justify-items: center;
+    justify-content: center;
+}
