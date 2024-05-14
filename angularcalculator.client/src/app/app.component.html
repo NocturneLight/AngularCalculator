@@ -1,5 +1,5 @@
 <h1>Angular Calculator</h1>
-<h3>Using Polish Notation!</h3>
+<h3>Using Reverse Polish Notation!</h3>
 
 <footer>By Antonio Rios.</footer>
 
@@ -7,13 +7,15 @@
   <div class="equation-container">
     <input disabled readonly [value]="CurrentEquation" />
     <span>=</span>
-    <input disabled readonly />
+    <input disabled readonly [value]="CurrentCalculation" />
   </div>
 
   <div class="grid-container">
-    <button *ngFor="let item of data" (click)="getNumber(item)">
+    <button *ngFor="let item of data" (click)="GetNumber(item)">
       {{item}}
     </button>
+
+    <button style="grid-column: 2/3;width:10rem" (click)="Calculate()">=</button>
   </div>
 </div>
 

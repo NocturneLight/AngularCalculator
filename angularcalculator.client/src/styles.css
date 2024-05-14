@@ -42,7 +42,7 @@ span {
 
 .grid-container {
   display: grid;
-  grid-template-rows: 4rem 4rem 4rem 4rem;
+  grid-template-rows: 4rem 4rem 4rem 4rem 4rem;
   grid-template-columns: 4rem 4rem 4rem;
 
   justify-items: center;

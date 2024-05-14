@@ -5,5 +5,10 @@ Accept: application/json
 
 ###
 
-GET {{AngularCalculator.Server_HostAddress}}/api/Number?number=9999/
+POST {{AngularCalculator.Server_HostAddress}}/api/Number?number=9
+Accept: application/json
+
+###
+
+GET {{AngularCalculator.Server_HostAddress}}/api/Number/
 Accept: application/json
