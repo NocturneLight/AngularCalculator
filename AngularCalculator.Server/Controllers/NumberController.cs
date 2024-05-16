@@ -30,7 +30,59 @@ public class NumberController : ControllerBase
 
     private string SolveEquation(string rpnEquation)
     {
-        throw new NotImplementedException();
+        var splitEquation = rpnEquation.Split(' ').Where(s => !string.IsNullOrEmpty(s)).ToArray();
+        int previousNumber = -1;
+
+        for (int i = 0; i < splitEquation.Length; i++)
+        {
+            string sequence = splitEquation[i];
+            int solution = 0;
+
+            switch (sequence)
+            {
+                case "*":
+                    solution = int.Parse(splitEquation[previousNumber - 1]) * int.Parse(splitEquation[previousNumber]);
+
+                    splitEquation[previousNumber - 1] = solution.ToString();
+                    previousNumber--;
+                    break;
+
+                case "/":
+                    solution = int.Parse(splitEquation[previousNumber - 1]) / int.Parse(splitEquation[previousNumber]);
+
+                    splitEquation[previousNumber - 1] = solution.ToString();
+                    previousNumber--;
+                    break;
+
+                case "+":
+                    solution = int.Parse(splitEquation[previousNumber - 1]) + int.Parse(splitEquation[previousNumber]);
+
+                    splitEquation[previousNumber - 1] = solution.ToString();
+                    previousNumber--;
+                    break;
+
+                case "-":
+                    solution = int.Parse(splitEquation[previousNumber - 1]) - int.Parse(splitEquation[previousNumber]);
+
+                    splitEquation[previousNumber - 1] = solution.ToString();
+                    previousNumber--;
+                    break;
+
+                case "%":
+                    solution = int.Parse(splitEquation[previousNumber - 1]) % int.Parse(splitEquation[previousNumber]);
+
+                    splitEquation[previousNumber - 1] = solution.ToString();
+                    previousNumber--;
+                    break;
+
+                default:
+                    previousNumber++;
+                    splitEquation[previousNumber] = splitEquation[i];
+                    break;
+            }
+        }
+
+        return splitEquation[previousNumber];
     }
 
     /// <summary>
