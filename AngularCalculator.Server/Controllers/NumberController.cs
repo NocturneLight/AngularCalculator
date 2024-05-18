@@ -21,63 +21,68 @@ public class NumberController : ControllerBase
     [HttpGet]
     public Calculator Get(string equation)
     {
+        // Converts a regular equation to reverse polish notation.
         var rpnEquation = ConvertToPostFixEquation(new Equation(equation));
 
+        // Solves the equation.
         var answer = SolveEquation(rpnEquation);
 
+        // Returns the answer so we can display it in the frontend.
         return new Calculator(Calculation: answer);
     }
 
-    private string SolveEquation(string rpnEquation)
+    /// <summary>
+    /// Finds the solution to the reverse polish notation equation.
+    /// </summary>
+    /// <param name="rpnEquation"></param>
+    /// <returns>The solution to the equation in string form.</returns>
+    private static string SolveEquation(string rpnEquation)
     {
-        var splitEquation = rpnEquation.Split(' ').Where(s => !string.IsNullOrEmpty(s)).ToArray();
+        // Gets all numbers and/or operators.
+        var splitEquation =
+            rpnEquation.Split(' ').Where(s => !string.IsNullOrEmpty(s)).ToArray();
+        
         int previousNumber = -1;
 
-        for (int i = 0; i < splitEquation.Length; i++)
+        foreach (string sequence in splitEquation)
         {
-            string sequence = splitEquation[i];
-            int solution = 0;
+            float solution = sequence switch {
+                // Performs addition on the previous two numbers.
+                "*" => float.Parse(splitEquation[previousNumber - 1]) * float.Parse(splitEquation[previousNumber]),
 
-            switch (sequence)
+                // Performs division on the previous two numbers.
+                "/" => float.Parse(splitEquation[previousNumber - 1]) / float.Parse(splitEquation[previousNumber]),
+
+                // Performs modulus on the previous two numbers.
+                "%" => float.Parse(splitEquation[previousNumber - 1]) % float.Parse(splitEquation[previousNumber]),
+
+                // Performs addition on the previous two numbers.
+                "+" => float.Parse(splitEquation[previousNumber - 1]) + float.Parse(splitEquation[previousNumber]),
+
+                // Performs subtraction on the previous two numbers.
+                "-" => float.Parse(splitEquation[previousNumber - 1]) - float.Parse(splitEquation[previousNumber]),
+
+                // No number is assigned if the character is not an operand.
+                _ => float.NaN
+            };
+
+            switch (solution)
             {
-                case "*":
-                    solution = int.Parse(splitEquation[previousNumber - 1]) * int.Parse(splitEquation[previousNumber]);
-
-                    splitEquation[previousNumber - 1] = solution.ToString();
-                    previousNumber--;
-                    break;
-
-                case "/":
-                    solution = int.Parse(splitEquation[previousNumber - 1]) / int.Parse(splitEquation[previousNumber]);
-
-                    splitEquation[previousNumber - 1] = solution.ToString();
-                    previousNumber--;
-                    break;
-
-                case "+":
-                    solution = int.Parse(splitEquation[previousNumber - 1]) + int.Parse(splitEquation[previousNumber]);
-
-                    splitEquation[previousNumber - 1] = solution.ToString();
-                    previousNumber--;
-                    break;
-
-                case "-":
-                    solution = int.Parse(splitEquation[previousNumber - 1]) - int.Parse(splitEquation[previousNumber]);
-
-                    splitEquation[previousNumber - 1] = solution.ToString();
-                    previousNumber--;
-                    break;
-
-                case "%":
-                    solution = int.Parse(splitEquation[previousNumber - 1]) % int.Parse(splitEquation[previousNumber]);
-
-                    splitEquation[previousNumber - 1] = solution.ToString();
-                    previousNumber--;
-                    break;
-
-                default:
+                // If we did not perform an operation, then increment the current value of
+                // previousNumber and assign the current sequence to the location of the previous number.
+                case float.NaN:
                     previousNumber++;
-                    splitEquation[previousNumber] = splitEquation[i];
+                    splitEquation[previousNumber] = sequence;
+
+                    break;
+
+                // If we performed an operation, then we assign the value to the location of the
+                // number right before the previous number in the array and decrement the previous
+                // number variable.
+                default:
+                    splitEquation[previousNumber - 1] = solution.ToString();
+                    previousNumber--;
+
                     break;
             }
         }

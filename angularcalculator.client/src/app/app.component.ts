@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { publish } from 'rxjs';
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+//interface WeatherForecast {
+//  date: string;
+//  temperatureC: number;
+//  temperatureF: number;
+//  summary: string;
+//}
 
 interface Calculator {
   //value: number;
@@ -24,7 +23,7 @@ interface Calculator {
 })
 
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+  //public forecasts: WeatherForecast[] = [];
   public CurrentEquation = "";
   public CurrentCalculation = "";
 
@@ -36,19 +35,19 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.getForecasts();
+    //this.getForecasts();
   }
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('api/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
+  //getForecasts() {
+  //  this.http.get<WeatherForecast[]>('api/weatherforecast').subscribe(
+  //    (result) => {
+  //      this.forecasts = result;
+  //    },
+  //    (error) => {
+  //      console.error(error);
+  //    }
+  //  );
+  //}
 
   // Sends a given value associated with a button to the server and then
   // returns a formatted string.
